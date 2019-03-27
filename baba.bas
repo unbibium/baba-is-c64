@@ -127,12 +127,11 @@
  1070 iffnpp(ck)and4then return:rem stop
  1085 if(fnpp(ck)and64)=0 then 1090
  1086 dl%(ck)=0:ck=ck-dx:rem replace first with 0 to sink/open
- 1089 rem@ \slowfor
- 1090 for i=ck to ds step -dx
- 1097 bg=pf%(i)and224:ifpf%(i)<8thenif(fnpp(i)and44)=0thenbg=pf%(i)*32
- 1100 dl%(i)=(pf%(i-dx)and31)or bg
- 1110 next i
- 1111 rem@ \fastfor
+ 1090 rem move all tiles head-first
+ 1095 bg=pf%(ck)and224
+ 1097 ifpf%(ck)<8thenif(fnpp(ck)and44)=0thenbg=pf%(ck)*32
+ 1100 dl%(ck)=(pf%(ck-dx)and31)or bg
+ 1110 if ck<>ds then ck=ck-dx:goto 1095
  1120 ifdl%(x)=-1thendl%(x)=pf%(x)/32:rem restore bg
  1999 return
  3000 rem --undo--
