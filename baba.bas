@@ -7,13 +7,14 @@
     5 rem baba is c64 -- a demake -- by nick bensema 2019
     6 w=10:h=11:mx=h*w-1
     7 rem@ \fastfor
+    8 ml=4:rem max levels
    10 dim pf%(mx):rem playfield map
    11 dim dl%(mx):rem playfield deltas
    12 dim ru%(31):rem rules
    13 def fnpp(pf)=ru%(pf%(pf)and31)
    14 def fnpb(pf)=ru%(pf%(pf)and31)orru%(pf%(pf)/32)
    15 dim gr$(31):rem gfx tiles 4x1
-   17 dim lv$(3):rem level data strings
+   17 dim lv$(ml):rem level data strings
    18 rem undo stack tile#,oldvalue,move#
    19 mu=300:dim ud%(mu,2)
    20 dim u%(mx):rem list of you-tiles
@@ -31,7 +32,7 @@
    72 data " @qph@@spj  @C@@@@@e@ @@a@be@@d @@@@@e@ @C@tpi@@rpk @upn@@@@@"
    73 data " @qph@@spj  eeeeeb eeaebbeed eeeeeb @cccccccc @tpi@@rpk @p @h"
    80 for x=0to23:readgr$(x):next x
-   90 for x=1to3:read lv$(x):next x
+   90 for n=1toml:read lv$(n):next n
   100 rem init
   101 poke 53281,6:poke 53272,21
   105 l%=1
