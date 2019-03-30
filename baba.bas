@@ -6,8 +6,8 @@
     4 rem@ \byte np,u,n,pf%(,u%(,ud%(:\word x,i
     5 rem baba is c64 -- a demake -- by nick bensema 2019
     6 w=10:h=11:mx=h*w-1
-    7 rem@ \fastfor
-    8 ml=4:rem max levels
+    7 rem \fastfor
+    8 ml=3:rem max levels
     9 mu=350:rem max deltas/undos (more than mx)
    10 dim pf%(mx):rem playfield map
    12 dim ru%(31):rem rules
@@ -27,10 +27,9 @@
    60 rem names
    61 data "{wht} is ","{wht}baba","{wht}rock","{wht}wall","{yel}flag","{lblu}watr","{yel}key ","{wht}door"
    69 rem levels. todo: better ones
-   70 data " @qph@@spj  @cccccccc @eeeebe @eaeebeed @eeeebe @cccccccc  @tpi@@rpk"
-   71 data " @qph@@spj  @C@@@@@c @eaefgeed @@@@@c @C@tpi@@vpk @wpl@@vpm"
-   72 data " @qph@@spj  @C@@@@@e@ @@a@be@@d @@@@@e@ @C@tpi@@rpk @upn@@@@@"
-   73 data " @qph@@spj  eeeeeb eeaebbeed eeeeeb @cccccccc @tpi@@rpk @p @h"
+   70 data "@:Qh@1Sj@;c7@1e3be@3eae1be1d@1e3be@3c7@;Ti@1Rk"
+   71 data "@:Qh@1Sj@;c8@4c@4eaefge1d@5c@4c8@Ti@1Vk@1Wl@1Vm"
+   72 data "@:Qh@1Sj@;c8@4e@5a@be@1d@5e@4c8@Ti@1Rk@1Un"
    80 for x=0to23:readgr$(x):next x
    90 for n=1toml:read lv$(n):next n
   100 rem init
@@ -40,12 +39,11 @@
   111 lv$=lv$(l%):print"{clr}{yel}unpacking level"l%
   114 rem level selected
   115 for x=0 to mx:pf%(x)=0:next x
-  119 rem@ \slowfor
-  120 i=0:for x=1tolen(lv$)
-  122 t$=mid$(lv$,x,1)
-  124 pf%(i)=asc(t$)and31
-  125 i=i+1:if t$<"@" or t$>"_" then ifint(i/w)<i*0.1then 124
-  128 nextx
+  120 i=0:x=1
+  122 t=asc(mid$(lv$,x,1))
+  124 ift>=64 then pf%(i)=31andt:ift>128theni=i+1:pf%(i)=16
+  125 ift>48andt<64andi<mxthenpf%(i)=pf%(i-1):ift>49theni=i+1:t=t-1:goto125
+  128 i=i+1:x=x+1:ifx<=len(lv$)andi<mxthen 122
   130 rem@ \fastfor
   150 fu=0:tu=1:rem undo underflow trigger
   155 for x=0 to mu:ud%(x,2)=fu:next x
@@ -80,6 +78,7 @@
   277 if k$="n" then l%=l%+1:goto 110:rem advance
   278 if k$="z" then 3000:rem undo
   280 if k$="p" then 700
+  285 if k$="d" then 8000:rem print data
   290 if k$="g" then input"{clr}goto level";l%:goto 110
   299 rem do all automata
   300 if u>0 then gosub 1000:goto 300
@@ -155,4 +154,20 @@
  3350 ud=ud+1:if ud>mu then ud=0
  3355 dl=ud
  3400 goto 210
+ 8000 rem "d" for print data
+ 8005 if mx=0 then print "can't"
+ 8010 print "79 data ";chr$(34);
+ 8020 ck=0:x=0
+ 8024 if x>=mx then 8098
+ 8025 np=pf%(x):n=np and 31
+ 8026 ifx<mx-1thenifpf%(x+1)=16then printchr$(192+n);:ck=x+2:goto 8050
+ 8027 print chr$(64+n);
+ 8028 if np>31 then print chr$(35+np/32);
+ 8030 rem run length detection?
+ 8035 ck=ck+1:if ck>=mx then 8045
+ 8040 if pf%(ck)=np then 8035
+ 8045 if(ck-1)>xthenprintchr$(47+ck-x);
+ 8050 x=ck:goto 8024
+ 8098 poke 646,14:print chr$(34)
+ 8099 end
 
