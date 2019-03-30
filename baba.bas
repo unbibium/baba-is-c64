@@ -2,8 +2,9 @@
 
 ;baba.prg ==0801==
     1 rem@ \constant w,h,mx,mu,ml
-    2 rem@ \integer fu,tu,ud,dx,ck,ds
-    4 rem@ \byte np,u,n,pf%(,u%(,ud%(:\word x,i
+    2 rem@ \integer fu,tu,ud,dx
+    3 rem@ \byte ds,n=fast,i=fast,x=fast,ck=fast
+    4 rem@ \byte np,u,pf%(,u%(,ud%(
     5 rem baba is c64 -- a demake -- by nick bensema 2019
     6 w=10:h=11:mx=h*w-1
     7 rem \fastfor
