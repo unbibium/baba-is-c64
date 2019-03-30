@@ -64,9 +64,11 @@
   256 u=0:win=0:for ck=0tomx
   257 n=pf%(ck):ifn=0then264
   258 i=ru%(nand31)orru%(n/32)
+  259 if(iand48)=48 then np=0:gosub 900:goto264:rem openshut
+  260 if(iand64)=64thenif pf%(ck)>32 thennp=0:gosub900:rem sink
   262 if i>256 and i/256<>n then gosub 800:rem transform
   263 ifiand1thenu%(u)=ck:u=u+1:ifiand2thenwin=1
-  264 nextck:poke 53280,14
+  264 nextck:gosub400:tu=tu+1:poke 53280,14
   265 rem drawscreen
   266 print"{home}";:for n=0tomx:printgr$(pf%(n)and31);:next n
   267 poke646,14:tu=tu+td:td=0:rem move to user input
@@ -89,9 +91,8 @@
   415 np=pf%(x):pf%(x)=ud%(ud,1):ud%(ud,1)=np
   416 ud=ud+1:ifud>muthen ud=0
   420 if ud<>dl then 414
-  424 rem only advance turn counter if undo stack has changed
+  424 rem todo: signal whether stack has changed
   426 fu=ud%(ud,2)
-  427 tu=tu+1
   450 goto 200:rem end of main loop
   600 rem "is"
   605 for dx=1 to w step w-1
@@ -132,13 +133,10 @@
  1050 rem obj at x wants to move dx
  1055 ds=x+dx:ck=ds
  1060 ifck<0orck>mxthenreturn:rem stop at edge
- 1061 if(fnpp(ck)and16)=0 then 1064
- 1062 if(fnpp(ck-dx)and32) then 1086
  1064 iffnpp(ck)and8 then ck=ck+dx:goto 1060:rem push property
  1065 ifpf%(ck)and24 then ck=ck+dx:goto 1060:rem push text
  1070 iffnpp(ck)and4then return:rem stop
  1085 if(fnpp(ck)and64)=0 then 1090
- 1086 np=0:gosub 900:ck=ck-dx:rem replace first with 0 to sink/open
  1090 rem move all tiles head-first
  1095 bg=pf%(ck)and224
  1097 ifpf%(ck)<8thenif(fnpp(ck)and44)=0thenbg=pf%(ck)*32
