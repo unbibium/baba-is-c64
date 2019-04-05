@@ -1,12 +1,12 @@
 
 
 ;baba.prg ==0801==
-    1 rem@ \constant w,h,mx,mu,ml
+    1 rem@ \constant w,h,mx,mu,ml,sm
     2 rem@ \integer fu,tu,ud,dx
     3 rem@ \byte ds,n=fast,i=fast,x=fast,ck=fast
     4 rem@ \byte np,u,pf%(,u%(,ud%(
     5 rem baba is c64 -- a demake -- by nick bensema 2019
-    6 w=10:h=11:mx=h*w-1
+    6 w=10:h=11:mx=h*w-1:sm=49152
     7 rem \fastfor
     8 ml=3:rem max levels
     9 mu=350:rem max deltas/undos (more than mx)
@@ -185,7 +185,9 @@
  8098 poke 646,14:print chr$(34)
  8099 end
  8500 rem "e" for editor
- 8505 x=0:print"f7=exit";
+ 8505 x=0
+ 8506 print"{lblu} {rvon}f1{rvof}=legend {rvon}f3{rvof}=restore {rvon}f5{rvof}=save {rvon}f7{rvof}=quit"
+ 8507 print" {rvon}crsr{rvof}=move {rvon}a-z{rvof}=set {rvon}shift{rvof}+{rvon}a-g{rvof}=bg"
  8510 gosub 980:print"{cyn}>{grn}";chr$(64+pf%(x)/32);chr$(64+(pf%(x)and31));"{cyn}<{left}";
  8520 getk$:ifk$=""then8510
  8530 dx=0:gosub 990:if dx=0 then 8600
@@ -194,19 +196,30 @@
  8560 if x>=mx then x=x-mx
  8570 goto 8520
  8600 print"?{left}";:ifk$="{f7}"then 150:rem back to game (clear undo)
- 8610 if k$="{f5}"then rem todo:f5=save
- 8615 if k$="{f3}"then rem todo:f3=load
- 8617 if k$="{f1}"then gosub 8800:gosub 970:goto 8510:rem help
+ 8610 if k$="{f5}"then 8900:rem save
+ 8615 if k$="{f3}"then 8950:rem load
+ 8617 if k$="{f1}"then gosub 8800:gosub 970:goto 8505:rem help
  8620 n=asc(k$)
- 8625 if(nand224)=64 thenprint"##";:pf%(x)=(pf%(x)and224)or(nand31):goto8510
- 8630 if(nand248)=192 thenprint"$$";:pf%(x)=(pf%(x)and31)or((nand7)*32):goto8510
+ 8625 if(nand224)=64 then pf%(x)=(pf%(x)and224)or(nand31):goto8510
+ 8630 if(nand248)=192 then pf%(x)=(pf%(x)and31)or((nand7)*32):goto8510
  8700 goto 8520
  8800 rem help
  8810 print"{clr}";
  8820 for i=0to15
  8825 print " {cyn}";chr$(i+64);" ";gr$(i);
- 8826 print tab(20);" {cyn}";chr$(i+72);" ";gr$(i+16)
+ 8826 print tab(20);" {cyn}";chr$(i+80);" ";gr$(i+16)
  8827 next i
+ 8829 print " {wht} press any key to return"
  8830 getk$:ifk$=""then8830
  8831 return
+ 8900 rem save to memory
+ 8905 poke 53281,14:poke 53280,1
+ 8910 for ck=0 to mx-1:poke sm+ck,pf%(ck):next
+ 8915 poke 53281,6:poke 53280,14
+ 8920 goto 8510
+ 8950 rem load from memory
+ 8955 poke 53281,14:poke 53280,1
+ 8960 for ck=0 to mx-1:pf%(ck)=peek(sm+ck):next
+ 8965 poke 53281,6:poke 53280,14
+ 8970 gosub 970:goto 8505
 
