@@ -19,7 +19,7 @@ into it yet.
 * Sixteen word tiles: all objects, properties, and "IS"
 * Seven properties: YOU, WIN, STOP, PUSH, SHUT, OPEN, SINK, ~LOSE~
 * Screen parser understands
-  * both horizontal and vertical commands
+  * both horizontal and vertical sentences
   * NOUN IS NOUN
   * NOUN IS PROPERTY
 * Cursor keys control any number of YOU tiles
@@ -34,6 +34,7 @@ into it yet.
 * Reset with "R"
 * Level skip with "N"
 * Poke into the level with "P"
+* Edit the level graphically with "E"
 * Dump current level into DATA statement with "D"
 * Very trivial levels that are very hard to edit.
 
