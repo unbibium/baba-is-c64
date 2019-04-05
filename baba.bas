@@ -69,7 +69,7 @@
   263 ifiand1thenu%(u)=ck:u=u+1:ifiand2thenwin=1
   264 nextck:gosub400:tu=tu+1:poke 53280,14
   265 rem drawscreen
-  266 print"{home}";:for n=0tomx:printgr$(pf%(n)and31);:next n
+  266 gosub 970
   267 poke646,14:tu=tu+td:td=0:rem move to user input
   268 if u=0 then print"nothing is you. z=undo r=reset"
   269 if win then print"congratulations. press n for next"
@@ -81,6 +81,7 @@
   280 if k$="p" then 700
   285 if k$="d" then 8000:rem print data
   290 if k$="g" then input"{clr}goto level";l%:goto 110
+  295 if k$="e" then 8500:rem editor
   299 rem do all automata
   300 if u>0 then gosub 1000:goto 300
   399 gosub400:goto 200
@@ -121,10 +122,22 @@
   910 ud%(dl,0)=ck:ud%(dl,1)=np:ud%(dl,2)=tu
   920 dl=dl+1:ifdl>mu then dl=0
   930 return
+  970 rem drawscreen
+  971 print"{home}";:for n=0tomx:printgr$(pf%(n)and31);:next n
+  972 return
+  980 rem put cursor at x tile
+  985 print"{home}"spc(x)spc(x)spc(x)spc(x);
+  989 return
+  990 rem calculate dx based on k$
+  992 if k$="{rght}"thendx=1
+  993 if k$="{left}"thendx=-1
+  994 if k$="{down}"thendx=w
+  995 if k$="{up}"thendx=-w
+  996 return
  1000 rem obj at x is you
  1001 u=u-1
  1002 dx=0:x=u%(u)
- 1005 if k$="{rght}"thendx=1
+ 1005 gosub 990:rem get dx
  1006 if k$="{left}"thendx=-1
  1007 if k$="{down}"thendx=w
  1008 if k$="{up}"thendx=-w
@@ -171,4 +184,29 @@
  8050 x=ck:goto 8024
  8098 poke 646,14:print chr$(34)
  8099 end
+ 8500 rem "e" for editor
+ 8505 x=0:print"f7=exit";
+ 8510 gosub 980:print"{cyn}>{grn}";chr$(64+pf%(x)/32);chr$(64+(pf%(x)and31));"{cyn}<{left}";
+ 8520 getk$:ifk$=""then8510
+ 8530 dx=0:gosub 990:if dx=0 then 8600
+ 8540 gosub 980:print gr$(pf%(x)and31);
+ 8550 x=x+dx:if x<0 then x=x+mx
+ 8560 if x>=mx then x=x-mx
+ 8570 goto 8520
+ 8600 print"?{left}";:ifk$="{f7}"then 150:rem back to game (clear undo)
+ 8610 if k$="{f5}"then rem todo:f5=save
+ 8615 if k$="{f3}"then rem todo:f3=load
+ 8617 if k$="{f1}"then gosub 8800:gosub 970:goto 8510:rem help
+ 8620 n=asc(k$)
+ 8625 if(nand224)=64 thenprint"##";:pf%(x)=(pf%(x)and224)or(nand31):goto8510
+ 8630 if(nand248)=192 thenprint"$$";:pf%(x)=(pf%(x)and31)or((nand7)*32):goto8510
+ 8700 goto 8520
+ 8800 rem help
+ 8810 print"{clr}";
+ 8820 for i=0to15
+ 8825 print " {cyn}";chr$(i+64);" ";gr$(i);
+ 8826 print tab(20);" {cyn}";chr$(i+72);" ";gr$(i+16)
+ 8827 next i
+ 8830 getk$:ifk$=""then8830
+ 8831 return
 
