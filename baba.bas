@@ -1,12 +1,12 @@
 
 
 ;baba.prg ==0801==
-    1 rem@ \constant w,h,mx,mu,ml,sm
+    1 rem@ \constant w,h,mx,mu,ml,sm,is
     2 rem@ \integer fu,tu,ud,dx
     3 rem@ \byte ds,n=fast,i=fast,x=fast,ck=fast
     4 rem@ \byte np,u,pf%(,u%(,ud%(
     5 rem baba is c64 -- a demake -- by nick bensema 2019
-    6 w=10:h=11:mx=h*w-1:sm=49152
+    6 w=10:h=11:mx=h*w-1:sm=49152:is=16
     7 rem \fastfor
     8 ml=3:rem max levels
     9 mu=350:rem max deltas/undos (more than mx)
@@ -30,7 +30,7 @@
   115 for x=0 to mx:pf%(x)=0:next x
   120 i=0:x=1
   122 t=asc(mid$(lv$,x,1))
-  124 ift>=64 then pf%(i)=31andt:ift>128theni=i+1:pf%(i)=16
+  124 ift>=64 then pf%(i)=31andt:ift>128theni=i+1:pf%(i)=is
   125 ift>48andt<64andi<mxthenpf%(i)=pf%(i-1):ift>49theni=i+1:t=t-1:goto125
   128 i=i+1:x=x+1:ifx<=len(lv$)andi<mxthen 122
   130 rem@ \fastfor
@@ -44,7 +44,7 @@
   210 for x=0 to 7:ru%(x)=0:next x
   215 poke 53280,5
   230 for x=1 to mx-1
-  231 ifpf%(x) =16 then gosub 600
+  231 ifpf%(x) =is then gosub 600
   240 rem todo: has/and or other verbs
   250 next x:poke 53280,3
   255 ru%(0)=0
@@ -162,7 +162,7 @@
  8020 ck=0:x=0
  8024 if x>=mx then 8098
  8025 np=pf%(x):n=np and 31
- 8026 ifx<mx-1thenifpf%(x+1)=16then printchr$(192+n);:ck=x+2:goto 8050
+ 8026 ifx<mx-1thenifpf%(x+1)=is then printchr$(192+n);:ck=x+2:goto 8050
  8027 print chr$(64+n);
  8028 if np>31 then print chr$(35+np/32);
  8030 rem run length detection?
