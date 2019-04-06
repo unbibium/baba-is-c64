@@ -4,21 +4,20 @@
     1 rem@ \constant w,h,mx,mu,ml,sm,is
     2 rem@ \integer fu,tu,ud,dx
     3 rem@ \byte ds,n=fast,i=fast,x=fast,ck=fast
-    4 rem@ \byte np,u,pf%(,u%(,ud%(
+    4 rem@ \byte np,u,pf%(,u%(,ud%(,tr%(
     5 rem baba is c64 -- a demake -- by nick bensema 2019
     6 w=10:h=11:mx=h*w-1:sm=49152:is=16
     7 rem \fastfor
     8 ml=3:rem max levels
     9 mu=350:rem max deltas/undos (more than mx)
    10 dim pf%(mx):rem playfield map
-   12 dim ru%(31):rem rules
+   12 dim ru%(31),tr%(7):rem rules
    13 def fnpp(pf)=ru%(pf%(pf)and31)
-   14 def fnpb(pf)=ru%(pf%(pf)and31)orru%(pf%(pf)/32)
    15 dim gr$(31):rem gfx tiles 4x1
    17 dim lv$(ml):rem level data strings
    18 rem delta log tile#,oldvalue,move#
    19 dim ud%(mu,2)
-   20 dim u%(mx):rem list of you-tiles
+   20 dim u%(mx-1):rem list of you-tiles
    80 for x=0to23:readgr$(x):next x
    90 for n=1toml:read lv$(n):next n
   100 rem init
@@ -41,7 +40,7 @@
   200 rem begin main loop
   205 if win then win=0:l%=l%+1:goto110
   209 rem build rules
-  210 for x=0 to 7:ru%(x)=0:next x
+  210 for x=0 to 7:ru%(x)=0:tr%(x)=0:next x
   215 poke 53280,5
   230 for x=1 to mx-1
   231 ifpf%(x) =is then gosub 600
@@ -50,10 +49,11 @@
   255 ru%(0)=0
   256 u=0:win=0:for ck=0tomx
   257 n=pf%(ck):ifn=0then264
-  258 i=ru%(nand31)orru%(n/32)
-  259 if(iand48)=48 then np=0:gosub 900:goto264:rem openshut
-  260 if(iand64)=64thenif pf%(ck)>32 thennp=0:gosub900:rem sink
-  262 if i>256 and i/256<>n then gosub 800:rem transform
+  258 if(nand24)=0theniftr%(nand7)theniftr%(nand7)<>(nand7) then gosub800:rem fg
+  259 ifn>32theniftr%(n/32)theniftr%(n/32)<>int(n/32) then gosub850:rem bg
+  260 i=ru%(nand31)orru%(n/32)
+  261 if(iand48)=48 then np=0:gosub 900:goto264:rem openshut
+  262 if(iand64)=64thenif pf%(ck)>32 thennp=0:gosub900:rem sink
   263 ifiand1thenu%(u)=ck:u=u+1:ifiand2thenwin=1
   264 nextck:gosub400:tu=tu+1:poke 53280,14
   265 rem drawscreen
@@ -92,7 +92,7 @@
   624 if ck>mx then 645
   625 i=pf%(ck)and31
   630 if(iand24)=8 then ru%(n)=ru%(n)or2^(iand7):rem property
-  640 if(iand24)=16 then ru%(n)=ru%(n)or((iand7)*256):rem transform
+  640 if(iand24)=16 then tr%(n)=iand7:rem transform
   645 next dx
   650 return
   700 rem poke
@@ -101,11 +101,18 @@
   730 goto 200
   800 rem noun-is-noun
   809 rem no rule changes so just draw and push to undo stack
-  810 ud%(ud,0)=ck:ud%(ud,1)=pf%(x):ud%(ud,2)=tu:td=1
-  815 ud=ud+1:if ud>mu then ud=0
-  816 dl=ud
-  820 pf%(ck)=i/256:n=i/256
-  849 return
+  810 gosub 880
+  820 n=nand224ortr%(nand7):pf%(ck)=n
+  830 return
+  850 rem noun-is-noun background
+  860 gosub 880
+  870 n=nand31or(tr%(n/32)*32):pf%(ck)=n
+  875 return
+  880 rem push to undo stack after delta loop already ran
+  890 ud%(ud,0)=ck:ud%(ud,1)=pf%(x):ud%(ud,2)=tu:td=1
+  895 ud=ud+1:if ud>mu then ud=0
+  896 dl=ud
+  899 return
   900 rem push to delta-undo stack
   910 ud%(dl,0)=ck:ud%(dl,1)=np:ud%(dl,2)=tu
   920 dl=dl+1:ifdl>mu then dl=0
