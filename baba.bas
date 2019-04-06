@@ -19,18 +19,6 @@
    18 rem delta log tile#,oldvalue,move#
    19 dim ud%(mu,2)
    20 dim u%(mx):rem list of you-tiles
-   48 rem@ \datatype string
-   49 rem objs 0-7
-   50 data "{blk}....","{wht}.ZZ.","{gry3}{CBM-D}{rvon}{CBM-Y}{CBM-Y}{rvof}{CBM-F}","{orng}{rvon}{CBM-R}{CBM-E}{CBM-R}{CBM-E}{rvof}","{yel} N{CBM-U} ","{lblu}////","{yel} W{CBM-R} ","{rvon}{red}O -P{rvof}"
-   52 rem properties 8-15
-   55 data "{cyn}{rvon}you {rvof}","{cyn}{rvon}win!{rvof}","{cyn}{rvon}stop{rvof}","{cyn}{rvon}push{rvof}","{cyn}{rvon}shut{rvof}","{cyn}{rvon}open{rvof}"
-   58 data "{cyn}{rvon}sink{rvof}","{cyn}{rvon}lose{rvof}"
-   60 rem names
-   61 data "{wht} is ","{wht}baba","{wht}rock","{wht}wall","{yel}flag","{lblu}watr","{yel}key ","{wht}door"
-   69 rem levels. todo: better ones
-   70 data "@:Qh@1Sj@;c7@1e3be@3eae1be1d@1e3be@3c7@;Ti@1Rk"
-   71 data "@:Qh@1Sj@;c8@4c@4eaefge1d@5c@4c8@Ti@1Vk@1Wl@1Vm"
-   72 data "@:Qh@1Sj@;c8@4e@5a@be@1d@5e@4c8@Ti@1Rk@1Un"
    80 for x=0to23:readgr$(x):next x
    90 for n=1toml:read lv$(n):next n
   100 rem init
@@ -222,4 +210,16 @@
  8960 for ck=0 to mx-1:pf%(ck)=peek(sm+ck):next
  8965 poke 53281,6:poke 53280,14
  8970 gosub 970:goto 8505
+ 19999 rem@ \datatype string
+ 20100 rem objs 0-7
+ 20110 data "{blk}....","{wht}.ZZ.","{gry3}{CBM-D}{rvon}{CBM-Y}{CBM-Y}{rvof}{CBM-F}","{orng}{rvon}{CBM-R}{CBM-E}{CBM-R}{CBM-E}{rvof}","{yel} N{CBM-U} ","{lblu}////","{yel} W{CBM-R} ","{rvon}{red}O -P{rvof}"
+ 20200 rem properties 8-15
+ 20210 data "{cyn}{rvon}you {rvof}","{cyn}{rvon}win!{rvof}","{cyn}{rvon}stop{rvof}","{cyn}{rvon}push{rvof}","{cyn}{rvon}shut{rvof}","{cyn}{rvon}open{rvof}"
+ 20220 data "{cyn}{rvon}sink{rvof}","{cyn}{rvon}lose{rvof}"
+ 20300 rem names
+ 20310 data "{wht} is ","{wht}baba","{wht}rock","{wht}wall","{yel}flag","{lblu}watr","{yel}key ","{wht}door"
+ 30000 rem level data - use "d" to create
+ 30010 data "@:Qh@1Sj@;c7@1e3be@3eae1be1d@1e3be@3c7@;Ti@1Rk"
+ 30020 data "@:Qh@1Sj@;c8@4c@4eaefge1d@5c@4c8@Ti@1Vk@1Wl@1Vm"
+ 30030 data "@:Qh@1Sj@;c8@4e@5a@be@1d@5e@4c8@Ti@1Rk@1Un"
 
