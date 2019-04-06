@@ -6,7 +6,7 @@
     3 rem@ \byte ds,n=fast,i=fast,x=fast,ck=fast
     4 rem@ \byte np,u,pf%(,u%(,ud%(,tr%(
     5 rem baba is c64 -- a demake -- by nick bensema 2019
-    6 w=10:h=11:mx=h*w-1:sm=49152:is=16
+    6 w=10:h=11:mx=h*w-1:sm=49152:is=31
     7 rem \fastfor
     8 ml=3:rem max levels
     9 mu=350:rem max deltas/undos (more than mx)
@@ -18,7 +18,7 @@
    18 rem delta log tile#,oldvalue,move#
    19 dim ud%(mu,2)
    20 dim u%(mx-1):rem list of you-tiles
-   80 for x=0to23:readgr$(x):next x
+   80 for n=0to31:read gr$(n):next n
    90 for n=1toml:read lv$(n):next n
   100 rem init
   101 poke 53281,6:poke 53272,21
@@ -87,12 +87,12 @@
   605 for dx=1 to w step w-1
   609 ck=x-dx
   610 if ck<0 then 645
-  611 n=pf%(ck)and31:if(n and 24)<>16 then 645
+  611 n=pf%(ck)and31:if(n and 24)<>8 then 645
   620 n=n and 7:ck=x+dx
   624 if ck>mx then 645
   625 i=pf%(ck)and31
-  630 if(iand24)=8 then ru%(n)=ru%(n)or2^(iand7):rem property
-  640 if(iand24)=16 then tr%(n)=iand7:rem transform
+  630 if(iand24)=16 then ru%(n)=ru%(n)or2^(iand7):rem property
+  640 if(iand24)=8 then tr%(n)=iand7:rem transform
   645 next dx
   650 return
   700 rem poke
@@ -220,13 +220,22 @@
  19999 rem@ \datatype string
  20100 rem objs 0-7
  20110 data "{blk}....","{wht}.ZZ.","{gry3}{CBM-D}{rvon}{CBM-Y}{CBM-Y}{rvof}{CBM-F}","{orng}{rvon}{CBM-R}{CBM-E}{CBM-R}{CBM-E}{rvof}","{yel} N{CBM-U} ","{lblu}////","{yel} W{CBM-R} ","{rvon}{red}O -P{rvof}"
- 20200 rem properties 8-15
- 20210 data "{cyn}{rvon}you {rvof}","{cyn}{rvon}win!{rvof}","{cyn}{rvon}stop{rvof}","{cyn}{rvon}push{rvof}","{cyn}{rvon}shut{rvof}","{cyn}{rvon}open{rvof}"
- 20220 data "{cyn}{rvon}sink{rvof}","{cyn}{rvon}lose{rvof}"
- 20300 rem names
- 20310 data "{wht} is ","{wht}baba","{wht}rock","{wht}wall","{yel}flag","{lblu}watr","{yel}key ","{wht}door"
+ 20300 rem names 8-15
+ 20310 data "","{wht}{rvof}baba"
+ 20330 data "{wht}{rvof}rock","{wht}{rvof}wall"
+ 20350 data "{wht}{rvof}flag","{wht}{rvof}watr"
+ 20370 data "{wht}{rvof}key ","{wht}{rvof}door"
+ 20400 rem properties/verbs 16-31
+ 20410 data "{cyn}{rvon}you {rvof}","{cyn}{rvon}win!{rvof}"
+ 20420 data "{cyn}{rvon}stop{rvof}","{cyn}{rvon}push{rvof}"
+ 20430 data "{cyn}{rvon}shut{rvof}","{cyn}{rvon}open{rvof}"
+ 20440 data "{cyn}{rvon}sink{rvof}","{cyn}{rvon}lose{rvof}"
+ 20450 data " 24 ","{$a0}25 "
+ 20455 data " 26{$a0}","{$a0}27 "
+ 20460 data " 28 "," 29 "
+ 20465 data "{wht}{rvof}has","{wht}{rvof} is "
  30000 rem level data - use "d" to create
- 30010 data "@:Qh@1Sj@;c7@1e3be@3eae1be1d@1e3be@3c7@;Ti@1Rk"
- 30020 data "@:Qh@1Sj@;c8@4c@4eaefge1d@5c@4c8@Ti@1Vk@1Wl@1Vm"
- 30030 data "@:Qh@1Sj@;c8@4e@5a@be@1d@5e@4c8@Ti@1Rk@1Un"
+ 30010 data "@:Ip@1Kr@;c7@1e3be@3eae1be1d@1e3be@3c7@;Lq@1Js@9"
+ 30020 data "@:Ip@1Kr@;c8@4c@4eaefge1d@5c@4c8@Lq@1Ns@1Ot@1Nu@9"
+ 30030 data "@:Ip@1Kr@;c8@4e@5a@be@1d@5e@4c8@Lq@1Js@1Mv@>"
 
