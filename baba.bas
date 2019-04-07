@@ -2,7 +2,7 @@
 
 ;baba.prg ==0801==
     1 rem@ \constant w,h,mx,mu,ml,sm,is
-    2 rem@ \integer fu,tu,ud,dx
+    2 rem@ \integer fu,tu,ud,dx,r
     3 rem@ \byte ds,n=fast,i=fast,x=fast,ck=fast
     4 rem@ \byte np,u,pf%(,u%(,ud%(,tr%(
     5 rem baba is c64 -- a demake -- by nick bensema 2019
@@ -48,16 +48,16 @@
   250 next x:poke 53280,3
   255 ru%(0)=0
   256 u=0:win=0:for ck=0tomx
-  257 n=pf%(ck):ifn=0then264
+  257 n=pf%(ck):ifn=0then265
   258 if(nand24)=0theniftr%(nand7)theniftr%(nand7)<>(nand7) then gosub800:rem fg
   259 ifn>32theniftr%(n/32)theniftr%(n/32)<>int(n/32) then gosub850:rem bg
-  260 i=ru%(nand31)orru%(n/32)
-  261 if(iand48)=48 then np=0:gosub 900:goto264:rem openshut
-  262 if(iand64)=64thenif pf%(ck)>32 thennp=0:gosub900:rem sink
-  263 ifiand1thenu%(u)=ck:u=u+1:ifiand2thenwin=1
-  264 nextck:gosub400:tu=tu+1:poke 53280,14
-  265 rem drawscreen
-  266 gosub 970
+  260 r=ru%(nand31)orru%(n/32)
+  261 if(rand48)=48 then np=0:gosub 900:goto265:rem open-shut destroys both
+  262 if(rand64)=64thenif pf%(ck)>32 thennp=0:gosub900:rem sink
+  263 if(rand768)=768then dr=512:gosub 950:goto265:rem hot/melt
+  264 ifrand1thenu%(u)=ck:u=u+1:ifrand2thenwin=1
+  265 nextck:gosub400:tu=tu+1:poke 53280,14
+  266 gosub 970:rem draw screen
   267 poke646,14:tu=tu+td:td=0:rem move to user input
   268 if u=0 then print"nothing is you. z=undo r=reset"
   269 if win then print"congratulations. press n for next"
@@ -91,7 +91,7 @@
   620 n=n and 7:ck=x+dx
   624 if ck>mx then 645
   625 i=pf%(ck)and31
-  630 if(iand24)=16 then ru%(n)=ru%(n)or2^(iand7):rem property
+  630 if(iand24)>15 then ru%(n)=ru%(n)or2^(iand15):rem property
   640 if(iand24)=8 then tr%(n)=iand7:rem transform
   645 next dx
   650 return
@@ -117,6 +117,10 @@
   910 ud%(dl,0)=ck:ud%(dl,1)=np:ud%(dl,2)=tu
   920 dl=dl+1:ifdl>mu then dl=0
   930 return
+  950 rem destroy object at ck with rule dr.  original value is n
+  955 if ru%(nand31) and dr then np=n/32:goto 900
+  956 if ru%(n/32) and dr then np=nand31:goto 900
+  957 return
   970 rem drawscreen
   971 print"{home}";:for n=0tomx:printgr$(pf%(n)and31);:next n
   972 return
@@ -226,14 +230,22 @@
  20350 data "{wht}{rvof}flag","{wht}{rvof}watr"
  20370 data "{wht}{rvof}key ","{wht}{rvof}door"
  20400 rem properties/verbs 16-31
- 20410 data "{cyn}{rvon}you {rvof}","{cyn}{rvon}win!{rvof}"
- 20420 data "{cyn}{rvon}stop{rvof}","{cyn}{rvon}push{rvof}"
- 20430 data "{cyn}{rvon}shut{rvof}","{cyn}{rvon}open{rvof}"
- 20440 data "{cyn}{rvon}sink{rvof}","{cyn}{rvon}lose{rvof}"
- 20450 data " 24 ","{$a0}25 "
- 20455 data " 26{$a0}","{$a0}27 "
- 20460 data " 28 "," 29 "
- 20465 data "{wht}{rvof}has","{wht}{rvof} is "
+ 20404 rem property is ru%(obj) and...
+ 20410 data "{cyn}{rvon}you {rvof}":rem 1
+ 20415 data "{cyn}{rvon}win!{rvof}":rem 2
+ 20420 data "{cyn}{rvon}stop{rvof}":rem 4
+ 20425 data "{cyn}{rvon}push{rvof}":rem 8
+ 20430 data "{cyn}{rvon}shut{rvof}":rem 16
+ 20435 data "{cyn}{rvon}open{rvof}":rem 32
+ 20440 data "{cyn}{rvon}sink{rvof}":rem 64
+ 20445 data "{cyn}{rvon}lose{rvof}":rem 128
+ 20450 data "{cyn}{rvon}hot {rvof}":rem 256
+ 20455 data "{cyn}{rvon}melt{rvof}":rem 512
+ 20460 data "{cyn}{rvon} 26 {rvof}":rem 1024
+ 20465 data "{cyn}{rvon} 27 {rvof}":rem 2048
+ 20470 data "{cyn}{rvon} 28 {rvof}":rem 4096
+ 20475 data "{cyn}{rvon} 29 {rvof}":rem 8192
+ 20485 data "{wht}{rvof}has","{wht}{rvof} is "
  30000 rem level data - use "d" to create
  30010 data "@:Ip@1Kr@;c7@1e3be@3eae1be1d@1e3be@3c7@;Lq@1Js@9"
  30020 data "@:Ip@1Kr@;c8@4c@4eaefge1d@5c@4c8@Lq@1Ns@1Ot@1Nu@9"
