@@ -191,7 +191,9 @@
  2260 if k$="{f5}"then 2445:rem save
  2265 if k$="{f3}"then 2470:rem load
  2270 if k$="{f1}"then gosub 2400:gosub 900:goto 2205:rem help
+ 2274 if k$=" " then pf%(x)=0:goto2220
  2275 n=asc(k$)
+ 2276 if n=20 then pf%(x)=pf%(x)/32:goto2220
  2280 if(nand224)=64 then pf%(x)=(pf%(x)and224)or(nand31):goto2220
  2285 if(nand248)=192 then pf%(x)=(pf%(x)and31)or((nand7)*32):goto2220
  2290 goto 2225
