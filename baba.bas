@@ -1,6 +1,6 @@
 
 
-;baba.prg ==1c01==
+;baba.prg ==0801==
     1 rem@ \constant w,h,mx,mu,ml,sm,is
     3 rem@ \integer fu,tu,ud,dx,r
     5 rem@ \byte ds,n=fast,i=fast,x=fast,ck=fast
@@ -54,6 +54,7 @@
   275 if(rand48)=48 then np=0:gosub 765:goto295:rem open-shut destroys both
   280 if(rand64)=64thenif pf%(ck)>32 thennp=0:gosub765:rem sink
   285 if(rand768)=768then dr=512:gosub 785:goto295:rem hot/melt
+  286 if(rand129)=129 then dr=1:gosub 785:goto295:rem you/lose
   290 ifrand1thenu%(u)=ck:u=u+1:ifrand2thenwin=1
   295 nextck:gosub500:tu=tu+1:poke 53280,14
   300 gosub 900:rem draw screen
@@ -76,7 +77,9 @@
   505 if ud=dl then return
   510 rem turn delta into undo
   515 x=ud%(ud,0)
-  520 np=pf%(x):pf%(x)=ud%(ud,1):ud%(ud,1)=np
+  520 np=ud%(ud,1):ud%(ud,1)=pf%(x)
+  521 if(npand31)=int(np/32) then np=npand31:rem absorb doules
+  522 pf%(x)=np
   525 ud=ud+1:ifud>muthen ud=0
   530 if ud<>dl then 515
   535 rem todo: signal whether stack has changed
