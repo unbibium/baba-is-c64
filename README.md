@@ -28,8 +28,9 @@ into it yet.
 * Win condition is YOU tile overlaps a WIN tile.
 * Moving objects are stopped by STOP tiles
 * PUSH tiles attempt to move in the same direction when moved upon.
-* Moving OPEN tiles combine with SHUT tiles to form an empty tile.
-* All moving tiles combine with SINK tiles to form an empty tile.
+* OPEN tiles combine with SHUT tiles to form an empty tile.
+* SINK tiles combine with any other tile to form an mepty tile.
+* MELT tiles are destroyed when combined with a HOT tile, which remains.
 * Undo with "Z"
 * Reset with "R"
 * Level skip with "N"
