@@ -2,7 +2,7 @@
 
 ;baba.prg ==0801==
     1 rem@ \constant w,h,mx,mu,ml,sm,is
-    3 rem@ \integer fu,tu,ud,dx,r
+    3 rem@ \integer fu,tu,ud,dx,r,su,se
     5 rem@ \byte ds,n=fast,i=fast,x=fast,ck=fast
     7 rem@ \byte np,u,pf%(,u%(,ud%(,tr%(
     8 rem \fastfor
@@ -71,8 +71,11 @@
   435 if k$="g" then input"{clr}goto level";l%:goto 115
   440 if k$="e" then 2200:rem editor
   445 rem send input to each you-tile
-  450 if u>0 then gosub 1000:goto 450
-  455 gosub500:goto 200
+  450 dx=0:gosub 2500:if dx=0 or u=0 then 465
+  454 rem assume dx never changes
+  455 su=(1-u)*(dx>0):se=(1-u)*(dx<0)
+  460 x=u%(su):gosub 1020:ifsu<>se thensu=su-sgn(dx):goto 460
+  465 gosub500:goto 200
   500 rem apply deltas and convert to undo
   505 if ud=dl then return
   510 rem turn delta into undo
