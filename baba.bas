@@ -87,7 +87,7 @@
   530 if ud<>dl then 515
   535 rem todo: signal whether stack has changed
   540 fu=ud%(ud,2)
-  545 goto 200:rem end of main loop
+  545 return:rem end of applying deltas
   600 rem "is"
   605 for dx=1 to w step w-1
   610 ck=x-dx
