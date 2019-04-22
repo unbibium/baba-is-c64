@@ -2,7 +2,7 @@
 
 ;baba.prg ==0801==
     1 rem@ \constant w,h,mx,mu,ml,sm,is
-    3 rem@ \integer fu,tu,ud,dx,r,su,se
+    3 rem@ \integer fu,tu,ud,dx,r
     5 rem@ \byte ds,n=fast,i=fast,x=fast,ck=fast
     7 rem@ \byte np,u,pf%(,u%(,ud%(,tr%(
     8 rem \fastfor
@@ -87,7 +87,7 @@
   530 if ud<>dl then 515
   535 rem todo: signal whether stack has changed
   540 fu=ud%(ud,2)
-  545 goto 200:rem end of main loop
+  545 return:rem end of applying deltas
   600 rem "is"
   605 for dx=1 to w step w-1
   610 ck=x-dx
