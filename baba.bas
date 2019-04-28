@@ -227,10 +227,10 @@
  2490 gosub 900:goto 2205
  2495 rem@ \datatype string
  2500 rem calculate dx based on k$
- 2505 if k$="{rght}"thendx=1
- 2510 if k$="{left}"thendx=-1
- 2515 if k$="{down}"thendx=w
- 2520 if k$="{up}"thendx=-w
+ 2505 if k$="{rght}" or k$="l" thendx=1
+ 2510 if k$="{left}" or k$="h" thendx=-1
+ 2515 if k$="{down}" or k$="j" thendx=w
+ 2520 if k$="{up}" or k$="k" thendx=-w
  2525 return
  9000 rem objs 0-7
  9010 data "{blk}....","{wht}.ZZ."

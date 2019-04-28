@@ -17,7 +17,7 @@ into it yet.
 
 * Eight object tiles: empty, Baba, rock, wall, flag, water, key, door
 * Sixteen word tiles: all objects, properties, and "IS"
-* Seven properties: YOU, WIN, STOP, PUSH, SHUT, OPEN, SINK, ~LOSE~
+* Seven properties: YOU, WIN, STOP, PUSH, SHUT, OPEN, SINK, LOSE
 * Screen parser understands
   * both horizontal and vertical sentences
   * NOUN IS NOUN
