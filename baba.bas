@@ -9,7 +9,7 @@
     8 rem \fastfor
     9 rem baba is c64 -- a demake -- by nick bensema 2019
    10 w=10:h=18:mx=h*w-1:sm=49152:is=31
-   15 ml=4:rem max levels
+   15 ml=5:rem max levels
    20 mu=350:rem max deltas/undos (more than mx)
    25 dim pf%(mx):rem playfield map
    30 dim ru%(31),tr%(7):rem rules
@@ -264,5 +264,5 @@
  9290 data"c?c7$c4{SHIFT-*}~c4~q@c1'c1@l!d~c1%a@c?c4*i@k&_{SHIFT-*}&p@r"
  9300 data"/Lq@c?~c6@d@c6~c;'c1@Kr#c1'c1'c1@a%c1'c:*Ip/("
  9310 data"Ipc6Krc$cMvc@Js@c4$c4@a~c4!b1@c4e4c1(c(c(ce2%ce2!Lq@cde1%c9"
- 9320 data"c4!Krc@2c$c@a@c$c@2c$c1bc1/@2Js!l(_e4#qe@2e$e@d@e$e@2e$e4/@2cIpc/%Mw$"
+ 9320 data"c4!Krc~c$c@a@c$c~c$c1bc1/~Js!l(_e4#qe~e$e@d@e$e~e$e4/~cIpc/%Mw"
 
