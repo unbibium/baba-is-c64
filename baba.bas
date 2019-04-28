@@ -8,7 +8,7 @@
     8 rem \fastfor
     9 rem baba is c64 -- a demake -- by nick bensema 2019
    10 w=10:h=18:mx=h*w-1:sm=49152:is=31
-   15 ml=3:rem max levels
+   15 ml=4:rem max levels
    20 mu=350:rem max deltas/undos (more than mx)
    25 dim pf%(mx):rem playfield map
    30 dim ru%(31),tr%(7):rem rules
@@ -161,7 +161,7 @@
  2050 goto 215
  2055 rem "d" for print data
  2060 if mx=0 then print "can't"
- 2065 print "79 data ";chr$(34);
+ 2065 print "9320dA";chr$(34);
  2070 ck=0:x=0
  2075 if x>=mx then 2125
  2080 np=pf%(x):n=np and 31
@@ -256,6 +256,7 @@
  9270 rem level data - use "d" to create
  9280 data "@:Ip@1Kr@;c7@1e3be@3eae1be1d@1e3be@3c7@;Lq@1Js@9"
  9290 data "c?c7@4c4{SHIFT-*}@2c4@2q@c1@7c1@l@1d@2c1@5a@c?c4@:i@k@6_{SHIFT-*}@6p@r"
- 9300 data  "@?Lq@c?@2c6@d@c6@2c;@7c1@Kr@3c1@7c1@7c1@a@5c1@7c:@:Ip"
+ 9300 data "@?Lq@c?@2c6@d@c6@2c;@7c1@Kr@3c1@7c1@7c1@a@5c1@7c:@:Ip"
+ 9310 data"Ipc6Krc@4cMvc@Js@c4@4c4@a@2c4@1b1@c4e4c1@8c@8c@8ce2@5ce2@1Lq@cde1@5c9"
  9900 data "c?c7@4c4{SHIFT-*}@2c4@2q@c1@7c1@l@1d@2c1@5a@c?c4@:i@k@6_{SHIFT-*}@6p@r@?@?@<"
 
