@@ -3,6 +3,7 @@
 ;baba.prg ==0801==
     1 rem@ \constant w,h,mx,mu,ml,sm,is
     3 rem@ \integer fu,tu,ud,dx,r
+    4 rem@ \byte td
     5 rem@ \byte ds,n=fast,i=fast,x=fast,ck=fast
     7 rem@ \byte t,np,u,pf%(,u%(,ud%(,tr%(
     8 rem \fastfor
@@ -58,7 +59,7 @@
   285 if(rand768)=768then dr=512:gosub 785:goto295:rem hot/melt
   286 if(rand129)=129 then dr=1:gosub 785:goto295:rem you/lose
   290 ifrand1thenu%(u)=ck:u=u+1:ifrand2thenwin=1
-  295 nextck:gosub500:tu=tu+1:poke 53280,14
+  295 nextck:gosub500:poke 53280,14
   300 gosub 900:rem draw screen
   305 poke646,14:tu=tu+td:td=0:rem move to user input
   310 if u=0 then print"nothing is you. z=undo r=reset"
@@ -80,6 +81,7 @@
   465 gosub500:goto 200
   500 rem apply deltas and convert to undo
   505 if ud=dl then return
+  506 td=1
   510 rem turn delta into undo
   515 x=ud%(ud,0)
   520 np=ud%(ud,1):ud%(ud,1)=pf%(x)
@@ -152,7 +154,7 @@
  1095 return
  2000 rem "z" for undo
  2005 rem@ \fastfor:\fastarray
- 2010 tu=tu-1
+ 2010 tu=tu-1:td=0
  2015 if tu<=fu then tu=fu+1:goto2050
  2020 ud=ud-1:if ud<0 then ud=mu
  2025 ifud%(ud,2)<>tu then 2040
