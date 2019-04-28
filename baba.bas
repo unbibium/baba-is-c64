@@ -4,7 +4,7 @@
     1 rem@ \constant w,h,mx,mu,ml,sm,is
     3 rem@ \integer fu,tu,ud,dx,r
     5 rem@ \byte ds,n=fast,i=fast,x=fast,ck=fast
-    7 rem@ \byte np,u,pf%(,u%(,ud%(,tr%(
+    7 rem@ \byte t,np,u,pf%(,u%(,ud%(,tr%(
     8 rem \fastfor
     9 rem baba is c64 -- a demake -- by nick bensema 2019
    10 w=10:h=18:mx=h*w-1:sm=49152:is=31
@@ -30,6 +30,7 @@
   135 i=0:x=1
   140 t=asc(mid$(lv$,x,1))
   145 ift>=64 then pf%(i)=31andt:ift>128theni=i+1:pf%(i)=is
+  146 ift>32 and t<48 and i<mx then pf%(i)=0:i=i+1:t=t-1:goto 146
   150 ift>48andt<64andi<mxthenpf%(i)=pf%(i-1):ift>49theni=i+1:t=t-1:goto150
   155 i=i+1:x=x+1:ifx<=len(lv$)andi<mxthen 140
   165 fu=0:tu=1:rem undo underflow trigger
@@ -172,6 +173,7 @@
  2105 ck=ck+1:if ck>=mx then 2115
  2110 if pf%(ck)=np and ck-x<16 then 2105
  2115 if(ck-1)>x thenprintchr$(47+ck-x);
+ 2116 if(ck-3)>x and np=0 then print chr$(20)chr$(20)chr$(31+ck-x);
  2120 x=ck:goto 2075
  2125 poke 646,14:print chr$(34)
  2130 end
@@ -254,9 +256,9 @@
  9250 data "{cyn}{rvon} 29 {rvof}":rem 8192
  9260 data "{wht}{rvof}has","{wht}{rvof} is "
  9270 rem level data - use "d" to create
- 9280 data "@:Ip@1Kr@;c7@1e3be@3eae1be1d@1e3be@3c7@;Lq@1Js@9"
- 9290 data "c?c7@4c4{SHIFT-*}@2c4@2q@c1@7c1@l@1d@2c1@5a@c?c4@:i@k@6_{SHIFT-*}@6p@r"
- 9300 data "@?Lq@c?@2c6@d@c6@2c;@7c1@Kr@3c1@7c1@7c1@a@5c1@7c:@:Ip"
- 9310 data"Ipc6Krc@4cMvc@Js@c4@4c4@a@2c4@1b1@c4e4c1@8c@8c@8ce2@5ce2@1Lq@cde1@5c9"
+ 9280 data"*Ip@1Kr+c7@1e3be#eae1be1d@1e3be#c7+Lq@1Js"
+ 9290 data"c?c7$c4{SHIFT-*}@2c4@2q@c1'c1@l@1d@2c1%a@c?c4*i@k&_{SHIFT-*}&p@r"
+ 9300 data"/Lq@c?@2c6@d@c6@2c;'c1@Kr#c1'c1'c1@a%c1'c:*Ip"
+ 9310 data"Ipc6Krc$cMvc@Js@c4$c4@a@2c4@1b1@c4e4c1(c(c(ce2%ce2@1Lq@cde1%c9"
  9900 data "c?c7@4c4{SHIFT-*}@2c4@2q@c1@7c1@l@1d@2c1@5a@c?c4@:i@k@6_{SHIFT-*}@6p@r@?@?@<"
 
