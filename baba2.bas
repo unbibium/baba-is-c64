@@ -1,6 +1,6 @@
 
 
-;baba.prg ==0801==
+;baba2.prg ==0801==
     1 rem@ \constant w,h,mx,mu,ml,sm,is
     3 rem@ \integer fu,tu,ud,dx,r
     5 rem@ \byte ds,n=fast,i=fast,x=fast,ck=fast
