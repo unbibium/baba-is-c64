@@ -11,7 +11,7 @@ I got farther than I expected.
 The game runs, and responds to cursor commands, but is too slow to
 actually play unless it is compiled.  When it is compiled with 
 Basic-BOSS, it is playable, but I haven't copied any good levels 
-into it yet.
+into it yet.  Currently there are five tutorial-grade levels.
 
 ## Supported features
 
@@ -31,6 +31,7 @@ into it yet.
 * OPEN tiles combine with SHUT tiles to form an empty tile.
 * SINK tiles combine with any other tile to form an mepty tile.
 * MELT tiles are destroyed when combined with a HOT tile, which remains.
+* LOSE tiles destroy any YOU tiles that move onto them.
 * Undo with "Z"
 * Reset with "R"
 * Level skip with "N"
