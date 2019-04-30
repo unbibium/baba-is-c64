@@ -165,7 +165,7 @@
  2050 goto 215
  2055 rem "d" for print data
  2060 if mx=0 then print "can't"
- 2065 print "9320dA";chr$(34);
+ 2065 print "9330dA";chr$(34);
  2070 ck=0:x=0
  2075 if x>=mx then 2125
  2080 np=pf%(x):n=np and 31
@@ -189,10 +189,11 @@
  2205 x=0
  2210 print"{lblu} {rvon}f1{rvof}=legend {rvon}f3{rvof}=restore {rvon}f5{rvof}=save {rvon}f7{rvof}=quit"
  2215 print" {rvon}crsr{rvof}=move {rvon}a-z{rvof}=set {rvon}shift{rvof}+{rvon}a-g{rvof}=bg"
- 2220 gosub 915:print"{cyn}>{grn}";chr$(64+pf%(x)/32);chr$(64+(pf%(x)and31));"{cyn}<{left}";
+ 2220 gosub 915:print"{cyn}{rvof}>{grn}";chr$(64+pf%(x)/32);chr$(64+(pf%(x)and31));"{cyn}<{left}";
  2225 getk$:ifk$=""then2220
- 2230 dx=0:gosub2500:if dx=0 then 2255
- 2235 gosub 915:print gr$(pf%(x)and31);
+ 2230 dx=0:if(asc(k$)and99)=1 then gosub2500
+ 2231 if dx=0 then 2255
+ 2235 gosub 915:print"{rvof}"gr$(pf%(x)and31);
  2240 x=x+dx:if x<0 then x=x+mx
  2245 if x>=mx then x=x-mx
  2250 goto 2225
@@ -206,7 +207,7 @@
  2280 if(nand224)=64 then pf%(x)=(pf%(x)and224)or(nand31):goto2220
  2285 if(nand248)=192 then pf%(x)=(pf%(x)and31)or((nand7)*32):goto2220
  2290 goto 2225
- 2400 rem editor "?" for help
+ 2400 rem editor "f1" for help
  2405 print"{clr}";
  2410 for i=0to15
  2415 print " {cyn}";chr$(i+64);" ";gr$(i);
@@ -238,7 +239,7 @@
  9030 data "{yel} N{CBM-U} ","{lblu}////"
  9040 data "{yel} W{CBM-R} ","{rvon}{red}O -P{rvof}"
  9050 rem names 8-15
- 9060 data "","{wht}{rvof}baba"
+ 9060 data "{red}{rvon}  8 ","{wht}{rvof}baba"
  9070 data "{wht}{rvof}rock","{wht}{rvof}wall"
  9080 data "{wht}{rvof}flag","{wht}{rvof}watr"
  9090 data "{wht}{rvof}key ","{wht}{rvof}door"
