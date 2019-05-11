@@ -3,7 +3,7 @@
 ;baba.prg ==0801==
     1 rem@ \constant w,h,mx,mu,ml,sm,is
     3 rem@ \integer fu,tu,ud,dx,r
-    4 rem@ \byte td
+    4 rem@ \byte td,nl
     5 rem@ \byte ds,n=fast,i=fast,x=fast,ck=fast
     7 rem@ \byte t,np,u,pf%(,u%(,ud%(,tr%(
     8 rem \fastfor
@@ -23,13 +23,14 @@
    70 for n=1toml:read lv$(n):next n
   100 rem init
   105 poke 53281,6:poke 53272,21
-  110 l%=1
+  110 l%=1:i=0
   115 if l%>ml then print "{clr}{wht}end of game{lblu}":end
-  120 lv$=lv$(l%):print"{clr}{yel}unpacking level"l%
-  125 rem level selected
-  130 for x=0 to mx:pf%(x)=0:next x
-  135 i=0:x=1
+  119 for x=0 to mx:pf%(x)=0:next x
+  120 i=0:l2=l%
+  125 lv$=lv$(l2):print"{clr}{yel}unpacking level"l%;".";l2-l%
+  135 x=1
   140 t=asc(mid$(lv$,x,1))
+  141 ift=191then l2=l2+1:goto 120
   144 ift=255thent=34
   145 ift>=64 then pf%(i)=31andt:ift>128theni=i+1:pf%(i)=is
   147 ift>32 and t<48 and i<mx then pf%(i)=0:i=i+1:t=t-1:goto 147
@@ -40,7 +41,7 @@
   175 ud=0:dl=0
   180 print"{clr}";
   200 rem begin main loop
-  205 if win then win=0:l%=l%+1:goto115
+  205 if win then win=0:l%=l2+1:goto115
   210 rem build rules
   215 for x=0 to 7:ru%(x)=0:tr%(x)=0:next x
   220 poke 53280,5
@@ -65,9 +66,9 @@
   310 if u=0 then print"nothing is you. z=undo r=reset"
   315 if win then print"congratulations. press n for next"
   400 printtu"{left}?    {left}{left}{left}{left}{left}";:wait198,15:getk$
-  405 if k$="r" then 125:rem reset
+  405 if k$="r" then 120:rem reset
   410 print asc(k$+".")"{left} {up}"
-  415 if k$="n" then l%=l%+1:goto 115:rem advance
+  415 if k$="n" then l%=l2+1:goto 115:rem advance
   420 if k$="z" then 2000:rem undo
   425 if k$="p" then 2150:rem poke
   430 if k$="d" then 2055:rem print data
@@ -165,8 +166,9 @@
  2050 goto 215
  2055 rem "d" for print data
  2060 if mx=0 then print "can't"
- 2065 print "9330dA";chr$(34);
- 2070 ck=0:x=0
+ 2065 ck=0:x=0:nl=ml
+ 2069 nl=nl+1
+ 2070 print9280+nl*10;"dA";chr$(34);
  2075 if x>=mx then 2125
  2080 np=pf%(x):n=np and 31
  2085 ifx<mx-1thenifpf%(x+1)=is then printchr$(192+n);:ck=x+2:goto 2120
@@ -178,9 +180,12 @@
  2115 if(ck-1)>x thenprintchr$(47+ck-x);
  2116 if(ck-1)>x and np=0 then print chr$(20)chr$(20)chr$(31+ck-x);
  2117 if(ck-3)=x and np=0 then print chr$(20)chr$(255);:rem repl "{$a0}with ~
- 2120 x=ck:goto 2075
+ 2118 if ck>=mx then 2125
+ 2120 x=ck:if peek(211)<75 then 2075
+ 2121 print"{CBM-B}"chr$(34):goto 2069:rem add another data
  2125 poke 646,14:print chr$(34)
- 2130 end
+ 2135 print15"ml=";nl;":rem max levels"
+ 2140 end
  2150 rem "p" for poke
  2155 input "poke";x,t$
  2160 ift$>""andx>=0andx<=mxthenpf%(x)=asc(t$)and31:t$=mid$(t$,2):x=x+1:goto2160
