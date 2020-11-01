@@ -13,7 +13,7 @@
    20 mu=350:rem max deltas/undos (more than mx)
    25 dim pf%(mx):rem playfield map
    30 dim ru%(31),tr%(7):rem rules
-   35 def fnpp(pf)=ru%(pf%(pf)and31)
+   35 def fnpp(pfi)=ru%(pf%(pfi)and31)
    40 dim gr$(31):rem gfx tiles 4x1
    45 dim lv$(ml):rem level data strings
    50 rem delta log tile#,oldvalue,move#
@@ -27,7 +27,7 @@
   115 if l%>ml then print "{clr}{wht}end of game{lblu}":end
   119 for x=0 to mx:pf%(x)=0:next x
   120 i=0:l2=l%
-  125 lv$=lv$(l2):print"{clr}{yel}unpacking level"l%;".";l2-l%
+  125 lv$=lv$(l2):print"{clr}{yel}unpacking level"l%
   135 x=1
   140 t=asc(mid$(lv$,x,1))
   141 ift=191then l2=l2+1:goto 120
