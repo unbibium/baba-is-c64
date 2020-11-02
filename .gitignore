@@ -1,3 +1,6 @@
 *~
 BASICBOSS.D64
-
+++*
+*.pp.bas
+.*.swp
+__pycache__
