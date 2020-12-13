@@ -40,3 +40,19 @@ into it yet.  Currently there are five tutorial-grade levels.
 * Dump current level into DATA statement with "D"
 * Very trivial levels that are very hard to edit.
 
+## Build instructions
+
+I did most of my development in C64 BASIC, but wanted to be able to track source
+code changes through GitHub.  You should be able to build the game from the text
+source code file by just typing `make`, if you have these tools available:
+
+* `petcat` for converting between ASCII and CBM BASIC.  It comes with VICE.
+   https://vice-emu.sourceforge.io/
+* `bbcompiler` for using BasicBOSS to compile to something that will run
+  in real time on a Commodore 64.  You can compile it from source with GCC
+  in the `bbcompiler-src` directory here:  https://github.com/mbergmann-sh/basicbossGUI/
+
+There is a dev script called `devbaba` that will build `baba.prg` and run it with VICE.
+If you edit the program and save it, it should back-port all the changes you made to
+`baba.bas`, and recompile it to `baba-compiled.prg`.
+
