@@ -114,7 +114,7 @@
   730 n=nand31or(tr%(n/32)*32):pf%(ck)=n
   735 return
   740 rem push to undo stack after delta loop already ran
-  745 ud%(ud,0)=ck:ud%(ud,1)=pf%(x):ud%(ud,2)=tu:td=1
+  745 ud%(ud,0)=ck:ud%(ud,1)=pf%(ck):ud%(ud,2)=tu:td=1
   750 ud=ud+1:if ud>mu then ud=0
   755 dl=ud
   760 return
