@@ -86,7 +86,7 @@
   510 rem turn delta into undo
   515 x=ud%(ud,0)
   520 np=ud%(ud,1):ud%(ud,1)=pf%(x)
-  521 if(npand31)=int(np/32) then np=npand31:rem absorb doules
+  521 if(npand31)=int(np/32) then np=npand31:rem absorb doubles
   522 pf%(x)=np
   525 ud=ud+1:ifud>muthen ud=0
   530 if ud<>dl then 515
@@ -264,7 +264,7 @@
  9230 data "{cyn}{rvon} 27 {rvof}":rem 2048
  9240 data "{cyn}{rvon} 28 {rvof}":rem 4096
  9250 data "{cyn}{rvon} 29 {rvof}":rem 8192
- 9260 data "{wht}{rvof}has","{wht}{rvof} is "
+ 9260 data "{wht}{rvof}has ","{wht}{rvof} is "
  9270 rem level data - use "d" to create
  9280 data"*Ip!Kr+c7!e3be#eae1be1d!e3be#c7+Lq!Js"
  9290 data"c?c7$c4{SHIFT-*}~c4~q@c1'c1@l!d~c1%a@c?c4*i@k&_{SHIFT-*}&p@r"
