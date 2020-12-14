@@ -87,7 +87,7 @@ follows:
    * `lv$` contains the current level
    * `x` contains the index being read from `lv$` starting at `1`
    * `i` contains the index being written info `pf%()` starting at `0`
-* ``140-150`: PETSCII value from `lv$` is read into `t` and parsed.
+* `140-150`: each PETSCII value from `lv$` is read into `t` and parsed.
    * character `191` (CBM-B) seems to indicate that the level data continues into another
      `DATA` statement, so read the next array element into `lv$` and continue.  
      (I doubt it'll work because `l2` gets reset at line `120` which is
