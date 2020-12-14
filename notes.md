@@ -75,8 +75,48 @@ All text tiles are treated as "PUSH" objects with no other properties.
 # Rule definitions on the playfield
 
 TODO
+# Level editor
 
-# Level definitions
+Press "E" to enter the level editor.  This will allow you to edit
+the playfield in place.  You can return to the game at any time by
+pressing "F7".
+
+A cursor will appear that looks like `>@@<`.  When you move the
+cursor over a tile, it will display the contents of that tile as a
+two-letter code. The left character is the background and the right
+character is the foreground.  For example. `>@@<` is an empty tile,
+`>EA<` is Baba standing on a water tile.
+
+Editor controls are as follows:
+
+* CRSR keys: move the cursor
+* `F1`: Show a legend of supported tiles.
+* `@`, `A`-`Z`, `[`, `£`, `]`, `uparrow`, `leftarrow`: put that
+  object in the foreground.
+* `SHIFT-A` through `SHIFT-G`: put that object in the background.
+* `DEL`: remove foreground object.  promote background to foreground.
+* `F5`: Save current screen to memory.  
+* `F3`: Restore screen saved from memory.
+* `F7`: Return to the game.
+
+To add a level to the actual game, you'll have to use this workflow:
+
+* Use `E` to enter the editor and start making changes.
+* When you are ready to playtest, press `F5` to save the screen, and
+ then `F7` to return to the game.
+* To restart the level, press `E` to re-enter the editor, `F3` to
+  restore the screen, and then `F7` to return to the game.
+* When you're finished playtesting, press `F7` to return to the game
+  and press `D` to generate `DATA` statements.
+
+The program will print two lines: a `DATA` statement containing the
+compressed level data, and replacement for line `15` redefining
+the maximum number of levels.  It will exit to BASIC so that you can
+move the cursor up and add both of these lines to the program.
+Then you can `SAVE` the new program with the new level at the end.
+
+## Level string format
+### Reading
 
 The `DATA` statements starting around line `9200` contain level data in a compressed
 format.  When the player enters a new level, the data string is decompressed as
@@ -99,4 +139,9 @@ follows:
      and store the "IS" type to the next tile.
    * character `33` to `47` (punctuation): the next `t-32` tiles are zero. (off by one?)
    * character `49` to `63` (punctuation): repeat the previous tile `t-48` times.
+
+### Writing
+
+TODO document the `DATA` statement generator
+
 
