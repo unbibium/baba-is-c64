@@ -76,3 +76,27 @@ All text tiles are treated as "PUSH" objects with no other properties.
 
 TODO
 
+# Level definitions
+
+The `DATA` statements starting around line `9200` contain level data in a compressed
+format.  When the player enters a new level, the data string is decompressed as
+follows:
+
+* `119`: entire playfield is filled with `0` (empty space)
+* `120-135`: variables are initialized
+   * `lv$` contains the current level
+   * `x` contains the index being read from `lv$` starting at `1`
+   * `i` contains the index being written info `pf%()` starting at `0`
+* ``140-150`: PETSCII value from `lv$` is read into `t` and parsed.
+   * character `191` (CBM-B) seems to indicate that the level data continues into another
+     `DATA` statement, so read the next array element into `lv$` and continue.  
+     (I doubt it'll work because `l2` gets reset at line `120` which is
+     where the `GOTO` statement leads)
+   * character `252` (PI) is treated as character `34` (double quotes), to accommodate the
+     limitations of BASIC.
+   * character `64` to `95` (unshifted letters): store the low 5 bits (`0-31`) to the playfield
+   * character `192` to `223` (shifted letters): store the low 5 bits (`0-31`) to the playfield,
+     and store the "IS" type to the next tile.
+   * character `33` to `47` (punctuation): the next `t-32` tiles are zero. (off by one?)
+   * character `49` to `63` (punctuation): repeat the previous tile `t-48` times.
+
