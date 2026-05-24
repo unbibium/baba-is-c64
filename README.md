@@ -6,7 +6,7 @@ In March 2019, Arvi "Hempuli" Teikari released a puzzle game called Baba Is You 
 
 I loved the concept, and I loved the game, but somehow instead of having the itch to play it, I got the itch to copy it, using Commodore 64 BASIC.
 
-I got farther than I expected.
+I got farther than I expected, but don't expect to finish.
 
 The game runs, and responds to cursor commands, but is too slow to
 actually play unless it is compiled.  When it is compiled with 
@@ -29,7 +29,7 @@ into it yet.  Currently there are five tutorial-grade levels.
 * Moving objects are stopped by STOP tiles
 * PUSH tiles attempt to move in the same direction when moved upon.
 * OPEN tiles combine with SHUT tiles to form an empty tile.
-* SINK tiles combine with any other tile to form an mepty tile.
+* SINK tiles combine with any other tile to form an empty tile.
 * MELT tiles are destroyed when combined with a HOT tile, which remains.
 * LOSE tiles destroy any YOU tiles that move onto them.
 * Undo with "Z"
@@ -56,3 +56,14 @@ There is a dev script called `devbaba` that will build `baba.prg` and run it wit
 If you edit the program and save it, it should back-port all the changes you made to
 `baba.bas`, and recompile it to `baba-compiled.prg`.
 
+# Related projects
+
+I ported this effort to C, compatible with cc65.  It includes a 2x2 tile mode.
+https://github.com/unbibium/baba-cc65
+
+If you're interested in Baba demakes, try this Pico-8 version:
+https://www.lexaloffle.com/bbs/?pid=149645
+
+If you're interested in 8-bit Baba demakes specifically, try "Adam is Me"
+for the Atari 8-bit, which is the same concept but has many differences: 
+https://aim.atariscene.pl/
